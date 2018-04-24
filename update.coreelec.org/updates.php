@@ -61,8 +61,7 @@ if(version_compare($vars['vers'], $latestver, '<')) {
     array(
       'update' => basename($parse_url['path']),
       'folder' => substr(dirname($parse_url['path']), 1),
-      'host' => $parse_url['host'],
-      'MD5' => ''
+      'host' => $parse_url['host']
     )
   );
 
