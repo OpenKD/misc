@@ -9,4 +9,7 @@ $dbuser = "coreelec";
 $dbpass = "23yZx0FW2j6R";
 $dbname = "coreelec";
 
+// Report all errors except E_NOTICE
+error_reporting(E_ALL ^ E_NOTICE);
+
 ?>
