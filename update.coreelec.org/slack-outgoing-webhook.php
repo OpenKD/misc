@@ -13,7 +13,7 @@ if ($p == "checkin") {
   $json = array(
     'text' => "$cnt devices have checked in within the last 24hrs."
   );
-  echo json_encode($json);
+  echo json_encode($json, JSON_PRETTY_PRINT);
 }
 
 ?>
