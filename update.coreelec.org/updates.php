@@ -1,9 +1,8 @@
 <?php
-// disable error reporting
-//error_reporting(0);
 
 // includes
-include "funcs.php";
+include "config.php";
+include "_includes/funcs.php";
 
 // variables
 $vars = array('system' => $_GET['i'],
@@ -14,14 +13,7 @@ $vars = array('system' => $_GET['i'],
 $unixtime = time();
 $country = geoip_country_name_by_name($_SERVER['REMOTE_ADDR']);
 
-$dbhost = "localhost";
-$dbuser = "coreelec";
-$dbpass = "23yZx0FW2j6R";
-$dbname = "coreelec";
-
-$supported = array('S905.arm', 'S912.arm', 'LePotato.arm', 'Odroid_C2.arm', 'KVIM2.arm');
-
-// don't continue if any of the variables are not empty
+// don't continue if any of the variables are empty
 foreach ($vars as $key => $value) {
   if (empty($value)) die("DIED: $key is empty!");
 }
@@ -32,10 +24,7 @@ if (!in_array($vars['arch'], $supported, true)) {
 }
 
 // connect to mysql server
-$mysqli = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-if ($mysqli->connect_errno) {
-  die("DIED: Failed to connect to MySQL: ($mysqli->connect_errno) $mysqli->connect_error");
-}
+include "_includes/mysqlconnect.php";
 
 // look to see if system is in the database first
 $res = $mysqli->query("SELECT system FROM coreelec WHERE system = '" . $vars['system'] . "'");
