@@ -3,12 +3,13 @@
 // includes
 include "config.php";
 include "_includes/funcs.php";
+include "_includes/mysqlconnect.php";
 
 // variables
-$vars = array('system' => $_GET['i'],
-              'dist' => $_GET['d'],
-              'arch' => $_GET['pa'],
-              'vers' => $_GET['v']);
+$vars = array('system' => $mysqli->real_escape_string($_GET['i']),
+              'dist' => $mysqli->real_escape_string($_GET['d']),
+              'arch' => $mysqli->real_escape_string($_GET['pa']),
+              'vers' => $mysqli->real_escape_string($_GET['v']));
 
 $unixtime = time();
 $country = geoip_country_name_by_name($_SERVER['REMOTE_ADDR']);
@@ -22,9 +23,6 @@ foreach ($vars as $key => $value) {
 if (!in_array($vars['arch'], $supported, true)) {
   die("DIED: Unsupported device");
 }
-
-// connect to mysql server
-include "_includes/mysqlconnect.php";
 
 // look to see if system is in the database first
 $res = $mysqli->query("SELECT system FROM coreelec WHERE system = '" . $vars['system'] . "'");
