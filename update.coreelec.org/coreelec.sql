@@ -1,6 +1,6 @@
 CREATE DATABASE `coreelec`;
 
-CREATE USER 'coreelec'@'localhost' IDENTIFIED BY '23yZx0FW2j6R';
+CREATE USER 'coreelec'@'localhost' IDENTIFIED BY 'somerandompassw0rd';
 
 GRANT SELECT, INSERT, UPDATE ON `coreelec`.* TO 'coreelec'@'localhost';
 

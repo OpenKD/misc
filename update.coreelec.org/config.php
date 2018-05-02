@@ -6,7 +6,7 @@ $supported = array('S905.arm', 'S912.arm', 'LePotato.arm', 'Odroid_C2.arm', 'KVI
 //database details
 $dbhost = "localhost";
 $dbuser = "coreelec";
-$dbpass = "23yZx0FW2j6R";
+$dbpass = "somerandompassw0rd";
 $dbname = "coreelec";
 
 // Report all errors except E_NOTICE

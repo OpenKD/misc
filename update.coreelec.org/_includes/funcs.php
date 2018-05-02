@@ -3,7 +3,7 @@
 function github_request($url)
 {
   $ch = curl_init();
-  $access = 'adamg88:50b6723216e7541538832ade4931c0369b12e405';
+  $access = 'YOUR_GITHUB_API_ACCESS_CODE';
   curl_setopt($ch, CURLOPT_URL, $url);
   curl_setopt($ch, CURLOPT_USERAGENT, 'PHP');
   curl_setopt($ch, CURLOPT_HEADER, 0);
