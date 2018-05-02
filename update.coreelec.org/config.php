@@ -1,7 +1,7 @@
 <?php
 
 // supported devices
-$supported = array('S905.arm', 'S912.arm', 'LePotato.arm', 'Odroid_C2.arm', 'KVIM2.arm');
+$supported = array('S905.arm', 'S912.arm', 'LePotato.arm', 'Odroid_C2.arm', 'KVIM2.arm', 'KVIM.arm');
 
 //database details
 $dbhost = "localhost";
