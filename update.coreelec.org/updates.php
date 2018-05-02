@@ -25,13 +25,22 @@ if (!in_array($vars['arch'], $supported, true)) {
 }
 
 // look to see if system is in the database first
-$res = $mysqli->query("SELECT system FROM coreelec WHERE system = '" . $vars['system'] . "'");
+$stmt = $mysqli->prepare("SELECT system FROM coreelec WHERE system = ?");
+$stmt->bind_param("s", $vars['system']);
+$stmt->execute();
+$res = $stmt->get_result();
 
 // if system is in database then update else insert
 if ($res->num_rows > 0) {
-  $mysqli->query("UPDATE coreelec SET arch='" . $vars['arch'] . "', version='" . $vars['vers'] . "', unixtime='$unixtime', country='$country' WHERE system='" . $vars['system'] . "'");
+  $stmt->close();
+  $stmt = $mysqli->prepare("UPDATE coreelec SET arch=?, version=?, unixtime='$unixtime', country='$country' WHERE system=?");
+  $stmt->bind_param("sss", $vars['arch'], $vars['vers'], $vars['system']);
+  $stmt->execute();
 } else {
-  $mysqli->query("INSERT INTO coreelec (system, arch, version, unixtime, country) VALUES ('" . $vars['system'] . "', '" . $vars['arch'] . "', '" . $vars['vers'] . "', '$unixtime', '$country')");
+  $stmt->close();
+  $stmt = $mysqli->prepare("INSERT INTO coreelec (system, arch, version, unixtime, country) VALUES (?, ?, ?, '$unixtime', '$country')");
+  $stmt->bind_param("sss", $vars['system'], $vars['arch'], $vars['vers']);
+  $stmt->execute();
 }
 
 // update check code
