@@ -24,23 +24,26 @@ if (!in_array($vars['arch'], $supported, true)) {
   die("DIED: Unsupported device");
 }
 
-// look to see if system is in the database first
-$stmt = $mysqli->prepare("SELECT system FROM coreelec WHERE system = ?");
-$stmt->bind_param("s", $vars['system']);
-$stmt->execute();
-$res = $stmt->get_result();
+// skip database entry if user does not want to be tracked
+if ($vars['system'] !== "DONOTTRACK") {
+  // look to see if system is in the database first
+  $stmt = $mysqli->prepare("SELECT system FROM coreelec WHERE system = ?");
+  $stmt->bind_param("s", $vars['system']);
+  $stmt->execute();
+  $res = $stmt->get_result();
 
-// if system is in database then update else insert
-if ($res->num_rows > 0) {
-  $stmt->close();
-  $stmt = $mysqli->prepare("UPDATE coreelec SET arch=?, version=?, unixtime='$unixtime', country='$country' WHERE system=?");
-  $stmt->bind_param("sss", $vars['arch'], $vars['vers'], $vars['system']);
-  $stmt->execute();
-} else {
-  $stmt->close();
-  $stmt = $mysqli->prepare("INSERT INTO coreelec (system, arch, version, unixtime, country) VALUES (?, ?, ?, '$unixtime', '$country')");
-  $stmt->bind_param("sss", $vars['system'], $vars['arch'], $vars['vers']);
-  $stmt->execute();
+  // if system is in database then update else insert
+  if ($res->num_rows > 0) {
+    $stmt->close();
+    $stmt = $mysqli->prepare("UPDATE coreelec SET arch=?, version=?, unixtime='$unixtime', country='$country' WHERE system=?");
+    $stmt->bind_param("sss", $vars['arch'], $vars['vers'], $vars['system']);
+    $stmt->execute();
+  } else {
+    $stmt->close();
+    $stmt = $mysqli->prepare("INSERT INTO coreelec (system, arch, version, unixtime, country) VALUES (?, ?, ?, '$unixtime', '$country')");
+    $stmt->bind_param("sss", $vars['system'], $vars['arch'], $vars['vers']);
+    $stmt->execute();
+  }
 }
 
 // update check code
