@@ -46,6 +46,10 @@ if ($vars['system'] !== "DONOTTRACK") {
   }
 }
 
+if(strpos($vars['vers'], 'devel') !== false) {
+  die('DIED: No updates when devel builds installed!');
+}
+
 // update check code
 $latestrel = github_request("https://api.github.com/repos/CoreELEC/CoreELEC/releases/latest");
 $latestver = $latestrel['tag_name'];
