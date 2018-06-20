@@ -25,7 +25,7 @@ if (!in_array($vars['arch'], $supported, true)) {
 }
 
 // skip database entry if user does not want to be tracked
-if ($vars['system'] !== "DONOTTRACK") {
+if ($vars['system'] !== "DONOTTRACK" || $vars['system'] !== "NOSTATS") {
   // look to see if system is in the database first
   $stmt = $mysqli->prepare("SELECT system FROM coreelec WHERE system = ?");
   $stmt->bind_param("s", $vars['system']);
